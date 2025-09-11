@@ -1,5 +1,3 @@
-Tópicos Principais 
-
 1. Problemas Atuais:
 
 Desperdício de papel e tinta: Muita impressão de guias e agendamentos que, muitas vezes, não são utilizados. A impressão frente e verso é obrigatória, mas a impressora do local não suporta, resultando em duas folhas por documento.
