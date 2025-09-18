@@ -10,27 +10,24 @@ graph TD
         B["👤 User <br> (Downloader)"]
     end
 
-    subgraph "Portal Seguro de Documentos"
+    subgraph "Portal Seguro (VM Única)"
         C["{API Backend <br> (Node.js/Fastify)}"]
-        D["(🗄️ Banco de Dados <br> (Metadados, Usuários))"]
-        E["(📄 Armazenamento de Arquivos <br> 'Pasta Mágica')"]
+        D["(🗄️ Banco de Dados <br> Guarda Metadados E os Arquivos PDF)"]
     end
 
     A -- 1. Faz Upload do Arquivo --> C
     B -- 2. Acessa, Loga e Baixa Arquivos --> C
     
-    E -- Gerencia --> D
-    C -- Gerencia --> E
+    C -- Salva e Consulta Tudo no --> D
 ```
 
-### Componentes:
-- Médico (Uploader): O usuário que envia os documentos assinados para a plataforma.
-- User (Downloader): O usuário que acessa o portal com login para visualizar e baixar os documentos.
-- API Backend: O "cérebro" do sistema. Ele recebe todas as requisições, aplica as regras de negócio e gerencia os dados e os arquivos.
-- Banco de Dados: Onde as informações sobre os arquivos (metadados como nome, data, quem enviou) e os dados dos usuários (login, senha criptografada) são armazenados.
-- Armazenamento de Arquivos: Onde os arquivos PDF em si ficam guardados de forma segura (a "Pasta Mágica").
+### Componentes
+- **Médico** (Uploader): O usuário que envia os documentos assinados para a plataforma.
+- **User** (Downloader): O usuário que acessa o portal com login para visualizar e baixar os documentos.
+- **API Backend**: Continua sendo o cérebro, processando todas as requisições.
+- **Banco de Dados**: Agora tem a dupla responsabilidade de guardar tanto os metadados (informações sobre os arquivos) quanto os próprios arquivos PDF (usando um campo tipo BLOB).
 
-### Fluxos (As Setas):
-- Seta 1 (Upload): Representa o médico enviando um novo arquivo para o sistema através da API.
-- Seta 2 (Acesso e Download): Representa a recepcionista interagindo com a API para fazer login, solicitar a lista de documentos e baixar os arquivos desejados.
-- Setas "Gerencia": Mostram que a API Backend é a única responsável por controlar o que é salvo e lido tanto no Banco de Dados quanto no Armazenamento de Arquivos.
+### **Fluxos**
+- **Seta 1** (Upload): Representa o médico enviando um novo arquivo para o sistema através da API.
+- **Seta 2** (Acesso e Download): Representa a recepcionista interagindo com a API para fazer login, solicitar a lista de documentos e baixar os arquivos desejados.
+- **Seta 3**: API agora centraliza todas as suas operações de armazenamento em um único lugar: o Banco de Dados.
